@@ -29,7 +29,6 @@ export default function DocumentAnalyzer() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = (uploadedFiles: FileList | null) => {
-    console.log("handleFileUpload called with:", uploadedFiles);
     if (!uploadedFiles) return;
 
     const fileArray = Array.from(uploadedFiles);
@@ -75,13 +74,11 @@ export default function DocumentAnalyzer() {
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
-    console.log("Drop event triggered", e.dataTransfer.files);
     handleFileUpload(e.dataTransfer.files);
   };
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
-    console.log("Drag over event triggered");
   };
 
   const analyzeFiles = async () => {

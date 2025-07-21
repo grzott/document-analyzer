@@ -1,7 +1,5 @@
-const { app, BrowserWindow, protocol } = require("electron");
+const { app, BrowserWindow } = require("electron");
 const path = require("path");
-const { createServer } = require("http");
-const { createReadStream, existsSync } = require("fs");
 const fetch = require("node-fetch");
 
 // Determine if we're in development mode without external dependency
@@ -38,31 +36,31 @@ function createWindow() {
     ? process.env.NEXT_DEV_URL || "http://localhost:3000"
     : "http://localhost:3001";
 
-  console.log(`Loading URL: ${startUrl}`);
-  console.log(`App is packaged: ${app.isPackaged}`);
-  console.log(`__dirname: ${__dirname}`);
-
   mainWindow.loadURL(startUrl);
 
   // Show window when ready to prevent visual flash
   mainWindow.once("ready-to-show", () => {
     mainWindow.show();
 
-    // Open DevTools for debugging
-    mainWindow.webContents.openDevTools();
-  });
-
-  // Log navigation events for debugging
-  mainWindow.webContents.on("did-finish-load", () => {
-    console.log("Page finished loading");
-  });
-
-  mainWindow.webContents.on(
-    "did-fail-load",
-    (event, errorCode, errorDescription) => {
-      console.error("Failed to load:", errorCode, errorDescription);
+    // Open DevTools in development mode only
+    if (isDev) {
+      mainWindow.webContents.openDevTools();
     }
-  );
+  });
+
+  // Log navigation events for debugging in development only
+  if (isDev) {
+    mainWindow.webContents.on("did-finish-load", () => {
+      console.log("Page finished loading");
+    });
+
+    mainWindow.webContents.on(
+      "did-fail-load",
+      (event, errorCode, errorDescription) => {
+        console.error("Failed to load:", errorCode, errorDescription);
+      }
+    );
+  }
 
   mainWindow.on("closed", () => {
     mainWindow = null;
@@ -126,11 +124,13 @@ Please provide a structured and detailed analysis:`;
 
         if (!ollamaResponse.ok) {
           const errorText = await ollamaResponse.text();
-          console.error("Ollama API error:", {
-            status: ollamaResponse.status,
-            statusText: ollamaResponse.statusText,
-            error: errorText,
-          });
+          if (isDev) {
+            console.error("Ollama API error:", {
+              status: ollamaResponse.status,
+              statusText: ollamaResponse.statusText,
+              error: errorText,
+            });
+          }
           throw new Error(
             `Ollama API responded with status ${ollamaResponse.status}: ${errorText}`
           );
@@ -144,7 +144,9 @@ Please provide a structured and detailed analysis:`;
 
         res.json({ analysis: data.response });
       } catch (error) {
-        console.error("Error in analyze API route:", error);
+        if (isDev) {
+          console.error("Error in analyze API route:", error);
+        }
 
         // Check if it's a connection error to Ollama
         if (error instanceof Error && error.message.includes("fetch")) {
@@ -162,7 +164,9 @@ Please provide a structured and detailed analysis:`;
     expressApp.use(express.static(path.join(__dirname, "..", "out")));
 
     staticServer = expressApp.listen(port, "localhost", () => {
-      console.log(`Static server running on http://localhost:${port}`);
+      if (isDev) {
+        console.log(`Static server running on http://localhost:${port}`);
+      }
       createWindow();
     });
   } else {
