@@ -6,6 +6,7 @@
   },
   "files": ["electron/**/*", "out/**/*", "public/**/*", "package.json"],
   "win": {
-    "target": "dir"
+    "target": "dir",
+    "forceCodeSigning": false
   }
 }

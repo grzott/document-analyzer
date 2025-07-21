@@ -29,6 +29,7 @@ export default function DocumentAnalyzer() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = (uploadedFiles: FileList | null) => {
+    console.log("handleFileUpload called with:", uploadedFiles);
     if (!uploadedFiles) return;
 
     const fileArray = Array.from(uploadedFiles);
@@ -74,11 +75,13 @@ export default function DocumentAnalyzer() {
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
+    console.log("Drop event triggered", e.dataTransfer.files);
     handleFileUpload(e.dataTransfer.files);
   };
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
+    console.log("Drag over event triggered");
   };
 
   const analyzeFiles = async () => {
@@ -274,7 +277,10 @@ export default function DocumentAnalyzer() {
             type="file"
             multiple
             accept=".pdf,.docx"
-            onChange={(e) => handleFileUpload(e.target.files)}
+            onChange={(e) => {
+              console.log("File input onChange triggered:", e.target.files);
+              handleFileUpload(e.target.files);
+            }}
             className="hidden"
             disabled={analyzing}
           />
@@ -283,7 +289,10 @@ export default function DocumentAnalyzer() {
 
           <Button
             variant="outline"
-            onClick={() => fileInputRef.current?.click()}
+            onClick={() => {
+              console.log("Choose Files button clicked");
+              fileInputRef.current?.click();
+            }}
             disabled={analyzing}
             className="mb-4"
           >
