@@ -12,3 +12,5 @@ Technology: React 19 TypeScript 5 NextJS 15,
 Libraries: shadcn/radix-ui, cslx, class-variance-authority, sonner, tailwind-merge, zod, lucide-react
 For reading PDFs: find a solution
 For document analysis: connecting to the gpt chat API https://platform.openai.com/docs/overview
+To run project Ollama needed
+AI integration: Ollama, model: 'llama2'
