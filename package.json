@@ -1,14 +1,23 @@
 {
   "name": "document-analyzer",
   "version": "0.1.0",
+  "description": "AI-powered PDF and DOCX document analyzer with local processing",
+  "author": "Document Analyzer Team",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "node scripts/copy-pdf-worker.mjs"
+    "postinstall": "node scripts/copy-pdf-worker.mjs",
+    "electron": "electron .",
+    "electron-dev": "concurrently \"npm run dev\" \"wait-on http://localhost:3000 && .\\electron\\start-electron.bat\"",
+    "build-electron": "npm run build && electron-builder",
+    "build-win": "npm run build && electron-builder --win",
+    "build-mac": "npm run build && electron-builder --mac",
+    "build-linux": "npm run build && electron-builder --linux"
   },
+  "main": "electron/main.js",
   "dependencies": {
     "@radix-ui/react-progress": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
@@ -18,7 +27,6 @@
     "lucide-react": "^0.525.0",
     "mammoth": "^1.9.1",
     "next": "15.4.2",
-    "pdf-parse": "^1.1.1",
     "pdfjs-dist": "^5.3.93",
     "postcss": "^8.5.6",
     "react": "19.1.0",
@@ -31,13 +39,17 @@
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4.1.11",
     "@types/node": "^20",
-    "@types/pdf-parse": "^1.1.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "concurrently": "^9.2.0",
+    "electron": "^37.2.3",
+    "electron-builder": "^26.0.12",
+    "electron-is-dev": "^3.0.1",
     "eslint": "^9",
     "eslint-config-next": "15.4.2",
     "tailwindcss": "^4.1.11",
     "tw-animate-css": "^1.3.5",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wait-on": "^8.0.3"
   }
 }
