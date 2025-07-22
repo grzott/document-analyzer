@@ -98,7 +98,7 @@ app.whenReady().then(() => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              model: "llama2",
+              model: "llama3.2",
               prompt: analysisPrompt,
               stream: false,
               options: {
