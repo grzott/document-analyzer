@@ -3,8 +3,9 @@ import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Document analyzer",
-  description: "For Lowo",
+  title: "Health & Safety Document Analyzer",
+  description:
+    "Analyze documents for health and safety compliance verification",
 };
 
 export default function RootLayout({

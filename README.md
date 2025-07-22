@@ -1,21 +1,42 @@
-# Document Analyzer
+# Health & Safety Document Analyzer
 
-A PDF and DOCX document analysis tool powered by AI using Ollama and Llama2 model.
+A specialized### 3. Download Llama2 Model
+
+````bash
+ollama pull llama2
+```h and safety compliance verification tool powered by AI using Ollama and Llama2 model.
 
 ## Features
 
-- Upload and analyze PDF and DOCX files (up to 10 files)
-- AI-powered document analysis using Ollama with Llama2 model
-- Real-time progress tracking during analysis
-- Download analysis results as text files
-- Drag and drop file upload interface
-- Responsive and user-friendly design
+- **11 Health & Safety Questions**: Pre-defined questionnaire covering essential compliance areas
+- **Document Upload per Question**: Upload up to 3 PDF/DOCX files per question
+- **Additional Context**: Optional text field for specific requirements per question
+- **AI-Powered Analysis**: Uses Ollama with Llama2 model to verify document compliance
+- **Checkbox Confirmation**: Visual feedback showing which questions are confirmed by documentation
+- **Analysis Summary**: Clear overview of confirmed vs not confirmed questions
+- **Progress Tracking**: Real-time progress during document analysis
+- **Results Export**: Download detailed analysis results as text files
+- **Responsive Design**: User-friendly interface optimized for compliance workflows
+
+## Health & Safety Questions Covered
+
+1. Do you have a health and safety policy and procedures?
+2. Do you have access to competent health and safety advice?
+3. Do you provide health and safety training to your employees?
+4. Do you produce risk assessments and method statements (RAMS)?
+5. Do you record and investigate accidents and incidents?
+6. Are you aware of your duties under CDM 2015?
+7. Do you assess occupational health risks and provide welfare?
+8. How do you assess and manage subcontractors?
+9. How do you monitor and review your health and safety performance?
+10. Do you hold valid and adequate insurance (e.g., Employers' Liability)?
+11. Can you provide examples of your health and safety documentation?
 
 ## Prerequisites
 
 1. **Node.js** (version 18 or higher)
 2. **Ollama** installed and running locally
-3. **Llama3.2 model** pulled in Ollama
+3. **Llama2 model** pulled in Ollama
 
 ## Setup Instructions
 
@@ -29,7 +50,7 @@ A PDF and DOCX document analysis tool powered by AI using Ollama and Llama2 mode
 
 ```bash
 curl -fsSL https://ollama.ai/install.sh | sh
-```
+````
 
 ### 2. Install Llama3.2 Model
 

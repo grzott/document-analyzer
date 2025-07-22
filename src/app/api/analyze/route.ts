@@ -11,20 +11,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create a detailed analysis prompt
-    const analysisPrompt = `
-Please analyze the following document and provide a comprehensive summary that includes:
-
-1. Main topic and purpose of the document
-2. Key points and findings
-3. Important facts, figures, or data mentioned
-4. Conclusions or recommendations (if any)
-5. Overall assessment and significance
-
-Document content:
-${text}
-
-Please provide a structured and detailed analysis:`;
+    // Use the text directly as it now contains the full prompt
+    const analysisPrompt = text;
 
     const ollamaResponse = await fetch("http://localhost:11434/api/generate", {
       method: "POST",
@@ -32,7 +20,7 @@ Please provide a structured and detailed analysis:`;
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "llama3.2:latest",
+        model: "llama2",
         prompt: analysisPrompt,
         stream: false,
         options: {
