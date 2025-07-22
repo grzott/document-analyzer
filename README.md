@@ -1,17 +1,13 @@
 # Health & Safety Document Analyzer
 
-A specialized### 3. Download Llama2 Model
-
-````bash
-ollama pull llama2
-```h and safety compliance verification tool powered by AI using Ollama and Llama2 model.
+A specialized health and safety compliance verification tool powered by AI using Ollama and Llama3.2 model.
 
 ## Features
 
 - **11 Health & Safety Questions**: Pre-defined questionnaire covering essential compliance areas
 - **Document Upload per Question**: Upload up to 3 PDF/DOCX files per question
 - **Additional Context**: Optional text field for specific requirements per question
-- **AI-Powered Analysis**: Uses Ollama with Llama2 model to verify document compliance
+- **AI-Powered Analysis**: Uses Ollama with Llama3.2 model to verify document compliance
 - **Checkbox Confirmation**: Visual feedback showing which questions are confirmed by documentation
 - **Analysis Summary**: Clear overview of confirmed vs not confirmed questions
 - **Progress Tracking**: Real-time progress during document analysis
@@ -34,23 +30,60 @@ ollama pull llama2
 
 ## Prerequisites
 
-1. **Node.js** (version 18 or higher)
-2. **Ollama** installed and running locally
-3. **Llama2 model** pulled in Ollama
+### For End Users
 
-## Setup Instructions
+- **Ollama** installed and running locally
+- **Llama3.2 model** downloaded via Ollama
+- **Windows 10/11** (64-bit)
 
-### PDF.js Worker Issues
+### For Developers
 
-- If you get "Setting up fake worker failed" errors, run: `node scripts/copy-pdf-worker.mjs`
-- The PDF.js worker file should be present at `public/pdf.worker.min.js`
-- PDF extraction only works in browser environment (client-side)
+- **Node.js** (version 18 or higher)
+- **Ollama** installed and running locally
+- **Llama3.2 model** pulled in Ollama
+- **Git** (for cloning the repository)
 
-### Development Issues
+## Quick Start (For End Users)
+
+If you have received the executable file, follow these simple steps:
+
+### 1. Install Ollama
+
+Download and install Ollama from [https://ollama.ai](https://ollama.ai)
+
+### 2. Install the AI Model
+
+Open Command Prompt (cmd) and run:
+
+```bash
+ollama pull llama3.2
+```
+
+### 3. Start Ollama
+
+In Command Prompt, run:
+
+```bash
+ollama serve
+```
+
+Keep this window open while using the application.
+
+### 4. Run the Application
+
+Double-click the `Document Analyzer.exe` file to start the application.
+
+**That's it!** The Health & Safety Document Analyzer is ready to use.
+
+---
+
+## Development Setup (For Developers)
+
+### 1. Install Ollama
 
 ```bash
 curl -fsSL https://ollama.ai/install.sh | sh
-````
+```
 
 ### 2. Install Llama3.2 Model
 
@@ -74,27 +107,100 @@ npm install
 
 This will automatically copy the PDF.js worker file to the public directory.
 
-### 5. Start Development Server
+### 5. Run Application
+
+#### Development Mode
 
 ```bash
-npm run dev
+npm run electron-dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+This will start both the Next.js development server and Electron app.
+
+#### Production Build
+
+```bash
+npm run build-win
+```
+
+This creates a Windows executable in the `dist/` folder.
 
 ## Usage
 
-1. **Upload Documents**: Click "Choose Files" or drag and drop PDF/DOCX files into the upload area
-2. **Analyze**: Click "Analyze Documents" to start the AI analysis process
-3. **Monitor Progress**: Watch the real-time progress indicator as documents are processed
-4. **View Results**: Review the detailed analysis results for each document
-5. **Download**: Click "Download Results" to save all analyses as a text file
+1. **Select Questions**: Review the 11 health & safety questions
+2. **Add Context**: Optionally add additional context for specific questions
+3. **Upload Documents**: Upload up to 3 PDF/DOCX files per question
+4. **Analyze**: Click "Analyze Documents" to start the AI verification process
+5. **Monitor Progress**: Watch the real-time progress indicator
+6. **View Results**: Review which questions are confirmed by your documentation
+7. **Download**: Save the detailed analysis results as a text file
+
+## Troubleshooting
+
+### Common Issues (End Users)
+
+**Application won't start:**
+
+- Make sure Ollama is running (`ollama serve` in Command Prompt)
+- Verify the Llama3.2 model is installed (`ollama list` to check)
+- Ensure no antivirus is blocking the .exe file
+
+**Analysis fails:**
+
+- Check that Ollama server is running on port 11434
+- Restart Ollama: Close Command Prompt and run `ollama serve` again
+- Try uploading smaller PDF files first
+
+**Can't upload files:**
+
+- Only PDF and DOCX files are supported
+- Maximum 3 files per question
+- File size should be reasonable (under 50MB per file)
+
+### Developer Issues
+
+**PDF.js Worker Issues:**
+
+- If you get "Setting up fake worker failed" errors, run: `node scripts/copy-pdf-worker.mjs`
+- The PDF.js worker file should be present at `public/pdf.worker.min.js`
+- PDF extraction only works in browser environment (client-side)
+
+**Ollama Model Issues:**
+
+- Ensure Ollama is running: `ollama serve`
+- Verify model is installed: `ollama list`
+- If using a different model, update the model name in the API routes
+
+**Development Issues:**
+
+- Use `npm run electron-dev` instead of `npm run dev` for the full Electron experience
+- Make sure ports 3000 and 11434 are available
+- Check that all dependencies are installed with `npm install`
 
 ## Technology Stack
 
 - **Frontend**: Next.js 15, React 19, TypeScript 5
 - **UI**: Tailwind CSS, shadcn/ui, Radix UI
+- **Desktop**: Electron 37
 - **PDF Processing**: PDF.js
 - **DOCX Processing**: Mammoth.js
 - **AI**: Ollama with Llama3.2 model
 - **Notifications**: Sonner
+
+## File Structure
+
+```
+health-safety-analyzer/
+├── electron/           # Electron main process
+├── src/
+│   ├── app/           # Next.js app router
+│   ├── components/    # React components
+│   ├── services/      # PDF, DOCX, Ollama services
+│   └── lib/           # Utilities
+├── public/            # Static assets
+└── dist/              # Production builds
+```
+
+## License
+
+MIT License - See LICENSE file for details
